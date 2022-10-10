@@ -1,30 +1,27 @@
 import { useOperations, useUser } from "../../Context/Context"
-import { validForm } from "../../helpers"
-import { showProps, Operation, operationForm } from "../../types"
+import { showProps, Operation, operationForm, OperationProps, operationType } from "../../types"
 
-const CreateOperation = (props: showProps) => {
+const EditOperation = (props: showProps & OperationProps) => {
     const url = import.meta.env.VITE_API_URL
     const [operations, setOperations] = useOperations()
     const [user,] = useUser()
+    const { operation } = props
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const form = document.getElementById('operation-form') as operationForm
-        if (!validForm(form)) { //TODO: validate forms
-            alert("Incorrect format")
-            return
-        }
-        const { conceptInput, ammountInput, operationTypeInput, dateInput } = form.elements
-        const [concept, ammount, operationType, date] = [conceptInput.value, ammountInput.value, operationTypeInput.value, dateInput.value]
-        const response = await fetch(`${url}/operations/`, {
-            method: "post",
+        const { conceptInput, ammountInput, operationTypeInput, dateInput } = form.elements;
+        [operation.concept, operation.ammount, operation.operationType, operation.date] = [conceptInput.value, parseFloat(ammountInput.value), operationTypeInput.value as operationType, dateInput.value];
+        await fetch(`${url}/operations/${props.operation.id}`, {
+            method: "put",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ concept, ammount, operationType, date, UserId: user.id })
+            body: JSON.stringify(operation)
         })
-        const newOperation = await response.json() as Operation
-        setOperations([...operations, newOperation])
+
+
+        setOperations([...operations, operation])
         props.setShow(false)
     }
     return (
@@ -62,4 +59,4 @@ const CreateOperation = (props: showProps) => {
     )
 }
 
-export default CreateOperation
+export default EditOperation

@@ -1,14 +1,19 @@
 import { JWTPayload } from 'jose'
 
-declare type userContextType = [
-    Token,
-    (x: Token) => void
-]
 
 declare type Token = JWTPayload & {
     id: string,
     name: string
 }
+
+declare type userContextType = [
+    Token,
+    (x: Token) => void
+]
+declare type operationContextType = [
+    Operations,
+    (x: Operations) => void
+]
 
 declare type operationType = 'ingreso' | 'egreso'
 
@@ -20,7 +25,7 @@ declare type Operation = {
     date: string,
     UserId: number
 }
-
+declare type OperationKey = 'id' | 'concept' | 'ammount' | 'operationType' | 'date' | 'UserId'
 declare type Operations = Operation[]
 
 declare type OperationProps = {
@@ -29,7 +34,7 @@ declare type OperationProps = {
 
 declare type showProps = {
     show: boolean,
-    setShow: (x: boolean) => void
+    setShow: (x: boolean) => void,
 }
 
 declare type signFormElements = HTMLFormControlsCollection & {

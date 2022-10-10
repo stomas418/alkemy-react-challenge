@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
-import { useUser } from "../../Context/Context"
-import { mapOperations } from "../../helpers"
+import { useOperations, useUser } from "../../Context/Context"
+import { equalOperations, mapOperations } from "../../helpers"
 import { Operations, operationType } from "../../types"
 import CreateOperation from "../Operation/CreateOperation"
-import Operation from "../Operation/Operation"
 
 const Home = () => {
-    const [operations, setOperations] = useState([] as Operations)
+    const [operations, setOperations] = useOperations()
     const [user, setUser] = useUser()
     const [balance, setBalance] = useState(0)
     const [create, setCreate] = useState(false)
@@ -24,6 +23,9 @@ const Home = () => {
                 return
             }
             const data = await response.json() as Operations
+            if (equalOperations(data, operations)) {
+                return
+            }
             let tempBalance = 0
             data.forEach(({ operationType, ammount }) => {
                 operationType == 'ingreso' ?
@@ -33,7 +35,7 @@ const Home = () => {
             setOperations(data)
         }
         getOperations()
-    }, [create])
+    }, [operations])
     const active = mapOperations(operations, activeOperations, limit)
     return (
         <>
