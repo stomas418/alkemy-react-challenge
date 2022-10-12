@@ -37,5 +37,5 @@ export const equalOperations = (arr1: Operations, arr2: Operations) => {
 }
 
 export const validForm = (form: HTMLFormElement) => {
-    return false
+    return true
 }

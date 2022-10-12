@@ -7,7 +7,7 @@ import CreateOperation from "../Operation/CreateOperation"
 const Home = () => {
     const [operations, setOperations] = useOperations()
     const [user, setUser] = useUser()
-    const [balance, setBalance] = useState(0)
+    const [balance, setBalance] = useState<number>(0)
     const [create, setCreate] = useState(false)
     const [activeOperations, setActiveOperations] = useState<operationType>('ingreso')
     const [limit, setLimit] = useState(10)
@@ -18,23 +18,19 @@ const Home = () => {
             const response = await fetch(`${url}/operations`, {
                 credentials: 'include'
             })
-
             if (response.status == 404) {
                 return
             }
             const data = await response.json() as Operations
-            if (equalOperations(data, operations)) {
-                return
-            }
-            let tempBalance = 0
-            data.forEach(({ operationType, ammount }) => {
-                operationType == 'ingreso' ?
-                    tempBalance += ammount : tempBalance -= ammount
-            })
-            setBalance(tempBalance)
             setOperations(data)
         }
         getOperations()
+    }, [])
+    useEffect(() => {
+        setBalance(operations
+            .map((({ ammount, operationType }) =>
+                (operationType == "ingreso" ? ammount : -ammount)))
+            .reduce((ammount, current) => current + ammount, 0))
     }, [operations])
     const active = mapOperations(operations, activeOperations, limit)
     return (

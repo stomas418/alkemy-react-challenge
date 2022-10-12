@@ -4,7 +4,6 @@ import { showProps, Operation, operationForm, OperationProps, operationType } fr
 const EditOperation = (props: showProps & OperationProps) => {
     const url = import.meta.env.VITE_API_URL
     const [operations, setOperations] = useOperations()
-    const [user,] = useUser()
     const { operation } = props
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -20,8 +19,9 @@ const EditOperation = (props: showProps & OperationProps) => {
             body: JSON.stringify(operation)
         })
 
-
-        setOperations([...operations, operation])
+        setOperations(operations.map((oldOperation) => (
+            oldOperation.id == operation.id ? operation : oldOperation
+        )))
         props.setShow(false)
     }
     return (

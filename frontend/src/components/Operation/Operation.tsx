@@ -10,11 +10,14 @@ const Operation = (props: OperationProps) => {
     const [show, setShow] = useState(false)
     const url = import.meta.env.VITE_API_URL
     const deleteOperation = async () => {
-        setOperations(operations.filter((operation) => operation.id != props.operation.id))
-        await fetch(`${url}/operations/${props.operation.id}`, {
+        const response = await fetch(`${url}/operations/${props.operation.id}`, {
             method: "DELETE",
             credentials: "include"
         })
+        if (response.status == 404) {
+            return
+        }
+        setOperations(operations.filter((operation) => operation.id != props.operation.id))
     }
     return (
         <>
