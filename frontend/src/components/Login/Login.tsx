@@ -35,14 +35,14 @@ const Login = () => {
 
     return (
         <div>
-            <h1>Login Form</h1>
+            <h1>Iniciar Sesión</h1>
             <form onSubmit={handleSubmit} className="sign-form" id="login-form" name="login-form">
                 <div className="form-field">
-                    <label htmlFor="usernameInput">Username:</label>
-                    <input type="text" name="usernameInput" />
+                    <label htmlFor="usernameInput">Email:</label>
+                    <input type="email" name="usernameInput" />
                 </div>
                 <div className="form-field">
-                    <label htmlFor="passwordInput">Password:</label>
+                    <label htmlFor="passwordInput">Contraseña:</label>
                     <input type="password" name="passwordInput" />
                 </div>
                 <br />

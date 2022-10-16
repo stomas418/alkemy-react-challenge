@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useOperations, useUser } from "../../Context/Context"
-import { equalOperations, mapOperations } from "../../helpers"
+import { mapOperations } from "../../helpers"
 import { Operations, operationType } from "../../types"
 import CreateOperation from "../Operation/CreateOperation"
 
@@ -35,12 +35,23 @@ const Home = () => {
     const active = mapOperations(operations, activeOperations, limit)
     return (
         <>
-            <h2>Bienvenido {user.name}, tu balance es ${balance}</h2>
-            <div className="showOptions">
-                <span onClick={() => setActiveOperations('ingreso')}>Ingresos</span>
-                <span onClick={() => setActiveOperations('egreso')}>Egresos</span>
+            <h2>Bienvenido, tu balance es ${balance}</h2>
+            <div id="options">
+                <span onClick={() => setActiveOperations('ingreso')} className={`${activeOperations == 'ingreso' ? 'focused' : ''}`}>Ingresos</span>
+                <span onClick={() => setActiveOperations('egreso')} className={`${activeOperations == 'egreso' ? 'focused' : ''}`}>Egresos</span>
             </div>
-            <h3>Ultimas 10 operaciones: </h3>
+            {limit == 10 ?
+                <>
+                    <button onClick={((e) => setLimit(0))}>Mostrar todas las operaciones de {activeOperations}</button>
+                    <h3>Últimas 10 operaciones: </h3>
+                </>
+                :
+                <>
+                    <button onClick={(e) => setLimit(10)}>Mostrar las 10 últimas operaciones</button>
+                    <h3>Todas las operaciones</h3>
+                </>
+            }
+
             <div className="operation-list">
                 {active.length > 0 ?
                     active
@@ -48,7 +59,7 @@ const Home = () => {
                 <div className="operation-create">
                     <button onClick={(e) => { setCreate(true) }}>Añadir más operaciones</button>
                 </div>
-                <button onClick={((e) => setLimit(0))}>Mostrar todas las operaciones de {activeOperations}</button>
+
             </div>
             <CreateOperation show={create} setShow={setCreate} />
         </>

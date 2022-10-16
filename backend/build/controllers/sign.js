@@ -47,7 +47,7 @@ var signIn = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
-                return [4, models_1.User.findOne(req.body.username)];
+                return [4, models_1.User.findOne({ where: { userName: req.body.userName } })];
             case 1:
                 findUser = _a.sent();
                 if (findUser != null)
@@ -73,7 +73,7 @@ var signUp = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4, models_1.User.findOne(req.body.username)];
+                return [4, models_1.User.findOne({ where: { userName: req.body.userName } })];
             case 1:
                 user = _a.sent();
                 if (user == null)

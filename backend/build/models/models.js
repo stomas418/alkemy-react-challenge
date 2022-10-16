@@ -52,7 +52,11 @@ exports.User = db_1.default.define('User', {
     },
     userName: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true,
+        }
     },
     password: {
         type: sequelize_1.DataTypes.STRING,

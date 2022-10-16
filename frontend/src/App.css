@@ -1,35 +1,37 @@
-#notes-container {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-
-}
-
 #options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-#home {
-  min-height: 90vh;
-  width: 90vw;
-}
-
-#createNote>button {
-  padding: 20px;
-}
-
-
 .focused {
   border-bottom: 2px solid grey;
 }
 
-.miniature {
+.sign-form {
   display: flex;
-  flex-flow: wrap;
   align-items: center;
-  justify-content: center;
-  border: 2px solid gray;
-  border-radius: 8px;
+  flex-direction: column;
+}
+
+.form-field {
+  width: 50%;
+  max-width: 400px;
+}
+
+.submit {
+  width: 50%;
+  max-width: 400px;
+}
+
+.clickable {
+  color: #888;
+  text-align: center;
+  text-shadow: 2vh;
+}
+
+
+.clickable:hover {
+  cursor: pointer;
 }
 
 .buttons {
@@ -37,13 +39,13 @@
 }
 
 .modal {
-  position: fixed;
+  position: absolute;
   /* Stay in place */
   z-index: 1;
   /* Sit on top */
-  left: 0;
+  left: 2%;
   top: 0;
-  width: 100%;
+  width: 95%;
   /* Full width */
   height: 100%;
   /* Full height */
@@ -61,7 +63,7 @@
   /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  width: 40%;
   /* Could be more or less, depending on screen size */
 }
 
@@ -74,6 +76,11 @@ input {
   min-height: 2em;
   width: 100%;
 
+}
+
+.error {
+  box-shadow: inset 0 0 5px #f00;
+  border: none;
 }
 
 textarea {

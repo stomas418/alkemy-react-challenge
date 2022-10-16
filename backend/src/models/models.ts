@@ -26,7 +26,11 @@ export const User = db.define('User', {
     },
     userName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true,
+        }
     },
     password: {
         type: DataTypes.STRING,

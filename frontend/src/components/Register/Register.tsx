@@ -1,4 +1,5 @@
 import { useUser } from "../../Context/Context"
+import { validForm } from "../../helpers"
 import { signForm, Token } from "../../types"
 
 const Register = () => {
@@ -7,6 +8,7 @@ const Register = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const form = document.getElementById('register-form') as signForm
+        if (!validForm(form)) return false
         const { usernameInput, passwordInput } = form.elements
         const [username, password] = [usernameInput.value, passwordInput.value]
         const response = await fetch(`${url}/sign/in`, {
@@ -30,14 +32,14 @@ const Register = () => {
 
     return (
         <div>
-            <h1>Register Form</h1>
+            <h1>Registro</h1>
             <form onSubmit={handleSubmit} name="form" id="register-form" className="sign-form">
                 <div className="form-field">
-                    <label htmlFor="usernameInput">Username:</label>
-                    <input type="text" name="usernameInput" />
+                    <label htmlFor="usernameInput">Email:</label>
+                    <input type="email" name="usernameInput" />
                 </div>
                 <div className="form-field">
-                    <label htmlFor="passwordInput">Password:</label>
+                    <label htmlFor="passwordInput">Contraseña:</label>
                     <input type="password" name="passwordInput" />
                 </div>
                 <br />
