@@ -30,7 +30,7 @@ const Home = () => {
         setBalance(operations
             .map((({ ammount, operationType }) =>
                 (operationType == "ingreso" ? ammount : -ammount)))
-            .reduce((ammount, current) => current + ammount, 0))
+            .reduce((ammount, current) => Number(current) + Number(ammount), 0)) //if i don't add the Number(x) then they concatenate as if they were strings
     }, [operations])
     const active = mapOperations(operations, activeOperations, limit)
     return (
