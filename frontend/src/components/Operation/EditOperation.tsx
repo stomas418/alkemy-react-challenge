@@ -29,22 +29,22 @@ const EditOperation = (props: showProps & OperationProps) => {
             <div className="modal">
                 <div className="modalContent">
                     <form id="operation-form" onSubmit={handleSubmit}>
-                        <div className="form-field">
+                        <div className="modal-form-field">
                             <label htmlFor="conceptInput">Concepto</label>
                             <input type="text" name="conceptInput" />
                         </div>
-                        <div className="form-field">
+                        <div className="modal-form-field">
                             <label htmlFor="ammountInput">Suma</label>
                             <input type="number" name="ammountInput" />
                         </div>
-                        <div className="form-field">
+                        <div className="modal-form-field">
                             <label htmlFor="operationTypeInput">Concepto</label>
                             <select name="operationTypeInput">
                                 <option value="ingreso">ingreso</option>
                                 <option value="egreso">egreso</option>
                             </select>
                         </div>
-                        <div className="form-field">
+                        <div className="modal-form-field">
                             <label htmlFor="dateInput">Fecha</label>
                             <input type="date" name="dateInput" />
                         </div>

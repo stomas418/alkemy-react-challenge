@@ -1,6 +1,6 @@
 import * as jwt from 'jose'
 import Operation from './components/Operation/Operation'
-import { signForm, Operations, operationType, Token } from './types'
+import { signForm, Operations, operationType, Token, operationForm } from './types'
 export const decodeToken = (token: string) => {
     const decoded = jwt.decodeJwt(token) as Token
     return decoded
@@ -36,7 +36,7 @@ export const mapOperations = (arr: Operations, active: operationType, limit: num
 //     return true
 // }
 
-export const validForm = (form: signForm) => {
+export const validSign = (form: signForm) => {
     const [username, password] = [form.elements.usernameInput.value,
     form.elements.passwordInput.value]
     let noErr = true
@@ -58,6 +58,47 @@ export const validForm = (form: signForm) => {
     if (passwordErrors > 0) {
         form.elements.usernameInput.value = ''
         form.elements.passwordInput.value = ''
+    }
+
+    return noErr
+}
+
+export const validOperation = (form: operationForm) => {
+    let noErr = true
+    const { ammountInput, dateInput, operationTypeInput } = form.elements
+    const [ammount, date, operationType] = [ammountInput.value, dateInput.value, operationTypeInput.value]
+
+    let ammountErrors = 0
+    if (isNaN(parseFloat(ammount))) {
+        alert("La suma debe ser un número")
+        ammountErrors += 1
+        noErr = false
+        form.elements.ammountInput.classList.add("error")
+    }
+    if (ammountErrors == 0) {
+        form.elements.ammountInput.classList.remove("error")
+    }
+
+    let dateErrors = 0
+    if (date == '') {
+        alert("Tienes que proveer una fecha")
+        dateErrors += 1
+        noErr = false
+        form.elements.dateInput.classList.add("error")
+    }
+    if (dateErrors == 0) {
+        form.elements.dateInput.classList.remove("error")
+    }
+
+    let operationTypeErrors = 0
+    if (operationType != 'ingreso' && operationType != 'egreso') {
+        alert("Las operaciones solo pueden ser ingresos o egresos")
+        operationTypeErrors += 1
+        noErr = false
+        form.elements.operationTypeInput.classList.add("error")
+    }
+    if (operationTypeErrors == 0) {
+        form.elements.operationTypeInput.classList.remove("error")
     }
 
     return noErr
